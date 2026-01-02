@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,14 @@ public class ChatMessageController
     public ResponseEntity<List<ChatMessageDto>> get(@PathVariable @NonNull Long groupId)
     {
         return ResponseEntity.ok(service.list(groupId));
+    }
+
+    @PostMapping("/{groupId}/chats")
+    public ResponseEntity<ChatMessageDto> createMessage(
+            @PathVariable @NonNull Long groupId,
+            @RequestBody @NonNull ChatMessageDto chatMessageDto)
+    {
+        return ResponseEntity.ok(service.create(groupId, chatMessageDto.getMessage()));
     }
 
     @PutMapping("/{groupId}/chats/{chatMessageId}")
